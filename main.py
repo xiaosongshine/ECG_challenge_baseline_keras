@@ -22,7 +22,8 @@ def get_feature(wav_file,Lens = 12,BASE_DIR=BASE_DIR):
     mat = loadmat(BASE_DIR+wav_file)
     dat = mat["data"]
     feature = dat[0:12]
-    return(normalize(feature).transpose())
+    #修改地址
+    return(normalize(feature).transpose())#return(normalize(feature))
 
 
 #把标签转成oneHot
@@ -67,8 +68,9 @@ TIME_PERIODS = 5000
 num_sensors = 12
 def build_model(input_shape=(TIME_PERIODS,num_sensors),num_classes=2):
     model = Sequential()
+    #修改地址 注释掉下面一行
     #model.add(Reshape((TIME_PERIODS, num_sensors), input_shape=input_shape))
-    model.add(Conv1D(16, 16,strides=2, activation='relu',input_shape=input_shape))
+    model.add(Conv1D(16, 16,strides=2, activation='relu',input_shape=(TIME_PERIODS,num_sensors)))
     model.add(Conv1D(16, 16,strides=2, activation='relu',padding="same"))
     model.add(MaxPooling1D(2))
     model.add(Conv1D(64, 8,strides=2, activation='relu',padding="same"))
