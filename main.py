@@ -90,8 +90,8 @@ def build_model(input_shape=(TIME_PERIODS,num_sensors),num_classes=2):
 if __name__ == "__main__":
     """dat1 = get_feature("TRAIN101.mat")
     print("one data shape is",dat1.shape)
-    #one data shape is (12, 5000)
-    plt.plot(dat1[0])
+    #one data shape is (5000, 12)
+    plt.plot(dat1[:,0])
     plt.show()"""
 
     if (os.path.exists(MANIFEST_DIR)==False):
