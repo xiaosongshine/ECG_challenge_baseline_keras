@@ -22,7 +22,7 @@ def get_feature(wav_file,Lens = 12,BASE_DIR=BASE_DIR):
     mat = loadmat(BASE_DIR+wav_file)
     dat = mat["data"]
     feature = dat[0:12]
-    return(normalize(feature))
+    return(normalize(feature).transpose())
 
 
 #把标签转成oneHot
@@ -65,10 +65,10 @@ def xs_gen(path=MANIFEST_DIR,batch_size = Batch_size,train=True):
             yield batch_x, batch_y
 TIME_PERIODS = 5000
 num_sensors = 12
-def build_model(input_shape=(num_sensors,TIME_PERIODS),num_classes=2):
+def build_model(input_shape=(TIME_PERIODS,num_sensors),num_classes=2):
     model = Sequential()
-    model.add(Reshape((TIME_PERIODS, num_sensors), input_shape=input_shape))
-    model.add(Conv1D(16, 16,strides=2, activation='relu',input_shape=(TIME_PERIODS,num_sensors)))
+    #model.add(Reshape((TIME_PERIODS, num_sensors), input_shape=input_shape))
+    model.add(Conv1D(16, 16,strides=2, activation='relu',input_shape=input_shape))
     model.add(Conv1D(16, 16,strides=2, activation='relu',padding="same"))
     model.add(MaxPooling1D(2))
     model.add(Conv1D(64, 8,strides=2, activation='relu',padding="same"))
